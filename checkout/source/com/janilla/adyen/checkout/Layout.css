@@ -1,0 +1,30 @@
+.layout {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+	
+	> header {
+		border-bottom: 1px solid light-dark(rgb(230, 233, 235), rgb(54, 59, 61));
+		display: flex;
+		height: 3rem;
+		justify-content: center;
+		left: 0;
+		padding: 1rem 0;
+		position: sticky;
+		right: 0;
+		top: 0;
+
+		@media (prefers-color-scheme: dark) {
+			img {
+				filter: invert(1);
+			}
+		}
+	}
+
+	> .content-parent {
+		margin: 0 auto;
+		max-width: 70rem;
+		padding: 0 2rem;
+		width: 100%;
+	}
+}

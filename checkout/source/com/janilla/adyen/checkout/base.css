@@ -1,0 +1,44 @@
+:root {
+	color-scheme: light dark;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+p,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: light-dark(rgb(255, 255, 255), rgb(24, 26, 27));
+	font-family: "Fakt", sans-serif, Helvetica, Arial;
+}
+
+h1,
+h2 {
+	font-weight: 500;
+	line-height: 1.2;	
+}
+
+h1 {
+	font-size: 2.5rem;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+a {
+	color: light-dark(rgb(0, 123, 255), rgb(51, 162, 255));
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}

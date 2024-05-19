@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module com.janilla.adyen.checkout {
+package com.janilla.adyen.checkout;
 
-	exports com.janilla.adyen.checkout;
+import java.util.List;
+import java.util.Map;
 
-	opens com.janilla.adyen.checkout;
+import com.janilla.web.Render;
 
-	requires transitive com.janilla;
-
-//	requires java.net.http;
+@Render("Index.html")
+public record Index(String title, List<Map.@Render("Checkout-type.html") Entry<String, String>> types) {
 }

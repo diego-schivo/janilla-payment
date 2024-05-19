@@ -21,13 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module com.janilla.adyen.checkout {
+package com.janilla.adyen.checkout;
 
-	exports com.janilla.adyen.checkout;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.List;
 
-	opens com.janilla.adyen.checkout;
+import com.janilla.web.Render;
 
-	requires transitive com.janilla;
+@Render("Preview.html")
+public record Preview(String title, List<Item> items, BigDecimal total) {
 
-//	requires java.net.http;
+	@Render("Preview-Item.html")
+	public record Item(URI image, String title, BigDecimal price) {
+	}
 }

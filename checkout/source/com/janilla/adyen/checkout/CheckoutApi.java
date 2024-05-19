@@ -25,16 +25,14 @@ package com.janilla.adyen.checkout;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+import com.janilla.http.Http;
 import com.janilla.http.HttpExchange;
+import com.janilla.http.HttpRequest;
 import com.janilla.json.Converter;
 import com.janilla.json.Json;
 import com.janilla.web.Handle;
@@ -45,26 +43,23 @@ public class CheckoutApi {
 
 	@Handle(method = "POST", path = "/api/sessions")
 	public Response sessions(HttpExchange exchange) throws IOException, InterruptedException {
+		var u = URI.create("https://checkout-test.adyen.com/v71/sessions");
+		var m = new HttpRequest.Method("POST");
+		var ak = configuration.getProperty("adyencheckout.adyen.api-key");
 		var ma = configuration.getProperty("adyencheckout.adyen.merchant-account");
 		var a = new Amount(1000, "EUR");
 		var ru = "https://your-company.com/checkout?shopperOrder=12xy..";
 		var r = UUID.randomUUID().toString();
 		var cc = "NL";
 		var ad = Map.<String, Object>of("riskdata.skipRisk", true);
-		var p = new Request(ma, a, ru, r, cc, ad);
-		var q = HttpRequest.newBuilder(URI.create("https://checkout-test.adyen.com/v71/sessions"))
-				.header("x-API-key", configuration.getProperty("adyencheckout.adyen.api-key"))
-				.header("content-type", "application/json").POST(BodyPublishers.ofString(Json.format(p, true))).build();
-		var s = HttpClient.newHttpClient().send(q, BodyHandlers.ofString());
-		System.out.println(s.statusCode());
-		System.out.println(s.body());
-		exchange.getResponse().setStatus(com.janilla.http.HttpResponse.Status.of(s.statusCode()));
-		var t = (Response) new Converter().convert(Json.parse(s.body()), Response.class);
-		return t;
+		var s = Http.fetch(u, m,
+				Map.of("Content-Type", "application/json", "Accept", "application/json", "X-API-Key", ak),
+				Json.format(new Request(ma, a, ru, r, cc, ad), true));
+		return (Response) new Converter().convert(Json.parse(s), Response.class);
 	}
 
-	public record Request(String merchantAccount, Amount amount, String returnUrl, String reference,
-			String countryCode, Map<String, Object> additionalData) {
+	public record Request(String merchantAccount, Amount amount, String returnUrl, String reference, String countryCode,
+			Map<String, Object> additionalData) {
 	}
 
 	public record Response(Amount amount, String countryCode, OffsetDateTime expiresAt, String id,

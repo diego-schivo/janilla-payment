@@ -23,8 +23,13 @@
  */
 package com.janilla.adyen.checkout;
 
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import com.janilla.web.Bind;
 import com.janilla.web.Handle;
 import com.janilla.web.Render;
 
@@ -33,13 +38,21 @@ public class CheckoutWeb {
 	public Properties configuration;
 
 	@Handle(method = "GET", path = "/")
-	public @Render("Checkout.html") Object index() {
-		return "";
+	public Index index() {
+		return new Index("Select type",
+				List.of(Map.entry("dropin", "Drop-in"), Map.entry("card", "Card"), Map.entry("ideal", "iDEAL"),
+						Map.entry("dotpay", "Dotpay"), Map.entry("giropay", "giropay"),
+						Map.entry("directEbanking", "SOFORT"), Map.entry("ach", "ACH"), Map.entry("paypal", "PayPal"),
+						Map.entry("alipay", "Alipay"), Map.entry("klarna_paynow", "Klarna - Pay now"),
+						Map.entry("klarna", "Klarna - Pay later"), Map.entry("klarna_account", "Klarna - Slice it")));
 	}
 
-	@Handle(method = "GET", path = "/preview/(\\w+)")
-	public @Render("Checkout-preview.html") Object preview(String type) {
-		return "";
+	@Handle(method = "GET", path = "/preview")
+	public Preview preview(@Bind("type") String type) {
+		return new Preview("Preview", List.of(
+				new Preview.Item(URI.create("/images/sunglasses.png"), "Sunglasses", BigDecimal.valueOf(5000, 2)),
+				new Preview.Item(URI.create("/images/headphones.png"), "Headphones", BigDecimal.valueOf(5000, 2))),
+				BigDecimal.valueOf(10000, 2));
 	}
 
 	@Handle(method = "GET", path = "/checkout/(\\w+)")

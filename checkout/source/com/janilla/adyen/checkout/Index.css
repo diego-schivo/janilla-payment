@@ -1,0 +1,52 @@
+.index {
+	gap: 2rem;
+
+	&,
+	header {
+		display: flex;
+		flex-direction: column;
+	}
+
+	header {
+		color: light-dark(rgb(0, 17, 44), rgb(218, 215, 210));
+		gap: 1rem;
+	}
+
+	ul {
+		display: grid;
+		gap: 32px;
+		grid-template-columns: repeat(3, 1fr);
+	
+		a {
+			background: light-dark(rgb(247, 248, 249), rgb(28, 30, 31));
+			border: 1px solid light-dark(rgb(247, 248, 249), rgb(50, 54, 56));
+			border-radius: 6px;
+			color: light-dark(rgb(0, 17, 44), rgb(218, 215, 210));
+			flex: 1;
+			font-size: 24px;
+			font-weight: 700;
+			padding: 37px;
+			text-align: center;
+
+			&:hover {
+				border-color: light-dark(rgb(0, 102, 255), rgb(0, 71, 179));
+
+				@media (prefers-color-scheme: light) {
+					& {
+						box-shadow: rgb(229, 234, 239) 0px 16px 24px 0px;
+					}
+				}
+
+				@media (prefers-color-scheme: dark) {
+					& {
+						box-shadow: rgb(36, 39, 40) 0px 16px 24px 0px;
+					}
+				}
+			}
+		}
+	}
+	
+	li {
+		display: flex;
+	}
+}

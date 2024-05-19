@@ -1,0 +1,19 @@
+<article class="preview">
+	<h2>Cart</h2>
+	<ul>
+		<{items}>
+	</ul>
+	<footer>
+		<span>Total:</span>
+		<span>{total}</span>
+		<a href="/checkout?type={type}">Continue to checkout</a>
+	</footer>
+</article>
+
+<template id="Preview-Item">
+	<li>
+		<img src="{image}" alt="">
+		<span class="title">{title}</span>
+		<span class="price">{price}</span>
+	</li>
+</template>
