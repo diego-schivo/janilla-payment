@@ -23,16 +23,8 @@
  */
 package com.janilla.adyen.checkout;
 
-import java.math.BigDecimal;
-import java.net.URI;
-import java.util.List;
-
 import com.janilla.web.Render;
 
-@Render("Preview.html")
-public record Preview(String title, String type, List<Item> items, BigDecimal total) {
-
-	@Render("Preview-Item.html")
-	public record Item(URI image, String title, BigDecimal price) {
-	}
+@Render("Checkout.html")
+public record Checkout(String title, String type, String clientKey) {
 }

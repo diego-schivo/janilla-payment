@@ -42,3 +42,17 @@ a {
 ul {
 	list-style: none;
 }
+
+.button {
+	background: light-dark(rgb(0, 17, 44), rgb(0, 14, 35));
+	border-radius: 6px;
+	box-shadow: rgba(0, 15, 45, 0.2) 0px 3px 4px 0px;
+	color: light-dark(rgb(255, 255, 255), rgb(232, 230, 227));
+	padding: 1rem;
+	text-align: center;
+	width: 280px;
+
+	&:hover {
+		background: light-dark(rgb(28, 48, 69), rgb(22, 38, 55));
+	}
+}

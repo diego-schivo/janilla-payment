@@ -23,16 +23,25 @@
  */
 package com.janilla.adyen.checkout;
 
-import java.math.BigDecimal;
-import java.net.URI;
-import java.util.List;
-
 import com.janilla.web.Render;
 
-@Render("Preview.html")
-public record Preview(String title, String type, List<Item> items, BigDecimal total) {
+@Render("Result.html")
+public record Result(String title, String type) {
 
-	@Render("Preview-Item.html")
-	public record Item(URI image, String title, BigDecimal price) {
+	public @Render("Result-thankYou.html") String thankYou() {
+		return switch (type) {
+		case "success", "pending" -> "thank-you";
+		default -> null;
+		};
+	}
+
+	public String message() {
+		return switch (type) {
+		case "success" -> "Your order has been successfully placed.";
+		case "pending" -> "Your order has been received! Payment completion pending.";
+		case "failed" -> "The payment was refused. Please try a different payment method or card.";
+		case "error" -> "Error! Please review response in console and refer to Response handling.";
+		default -> null;
+		};
 	}
 }

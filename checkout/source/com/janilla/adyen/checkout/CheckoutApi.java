@@ -31,10 +31,10 @@ import java.util.Properties;
 import java.util.UUID;
 
 import com.janilla.http.Http;
-import com.janilla.http.HttpExchange;
 import com.janilla.http.HttpRequest;
 import com.janilla.json.Converter;
 import com.janilla.json.Json;
+import com.janilla.web.Bind;
 import com.janilla.web.Handle;
 
 public class CheckoutApi {
@@ -42,14 +42,14 @@ public class CheckoutApi {
 	public Properties configuration;
 
 	@Handle(method = "POST", path = "/api/sessions")
-	public Response sessions(HttpExchange exchange) throws IOException, InterruptedException {
+	public Response sessions(@Bind("type") String type, HttpRequest request) throws IOException, InterruptedException {
 		var u = URI.create("https://checkout-test.adyen.com/v71/sessions");
 		var m = new HttpRequest.Method("POST");
 		var ak = configuration.getProperty("adyencheckout.adyen.api-key");
 		var ma = configuration.getProperty("adyencheckout.adyen.merchant-account");
 		var a = new Amount(1000, "EUR");
-		var ru = "https://your-company.com/checkout?shopperOrder=12xy..";
 		var r = UUID.randomUUID().toString();
+		var ru = request.getURI().getScheme() + "://" + request.getURI().getHost() + "/redirect?orderRef=" + r;
 		var cc = "NL";
 		var ad = Map.<String, Object>of("riskdata.skipRisk", true);
 		var s = Http.fetch(u, m,

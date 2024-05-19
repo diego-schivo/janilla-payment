@@ -1,20 +1,5 @@
-<template id="Checkout-type">
-	<li>
-		<a href="/preview?type={key}">{value}</a>
-	</li>
-</template>
-
-<template id="Checkout-preview">
-	<h2>Cart</h2>
-	<a href="/checkout/card">Continue to checkout</a>
-</template>
-
-<template id="Checkout-checkout">
-	<div id="clientKey" hidden>{clientKey}</div>
-	<div id="type" hidden>{type}</div>
-	<div id="payment"></div>
-</template>
-
-<template id="Checkout-result">
-	<p>{message}</p>
-</template>
+<article class="checkout" data-client-key="{clientKey}" data-type="{type}">
+	<div class="payment-parent">
+		<div class="payment"></div>
+	</div>
+</article>

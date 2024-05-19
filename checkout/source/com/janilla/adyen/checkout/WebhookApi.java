@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
-import com.janilla.http.HttpExchange;
 import com.janilla.http.HttpResponse;
 import com.janilla.json.Converter;
 import com.janilla.json.Converter.MapType;
@@ -39,10 +38,10 @@ import com.janilla.web.Handle;
 public class WebhookApi {
 
 	@Handle(method = "POST", path = "/api/webhooks/notifications")
-	public void webhooks(@Bind(resolver = Request.Resolver.class) Request request,
-			HttpExchange exchange) throws IOException {
+	public void webhooks(@Bind(resolver = Request.Resolver.class) Request request, HttpResponse response)
+			throws IOException {
 		System.out.println(request);
-		exchange.getResponse().setStatus(new HttpResponse.Status(202, "Accepted"));
+		response.setStatus(new HttpResponse.Status(202, "Accepted"));
 	}
 
 	public record Request(boolean live, List<Item> notificationItems) {
@@ -52,15 +51,14 @@ public class WebhookApi {
 			@Override
 			public MapType apply(MapType x) {
 				return x.type() == Item.class
-						? new Converter.MapType((Map<?, ?>) x.map().get("NotificationRequestItem"),
-								Item.class)
+						? new Converter.MapType((Map<?, ?>) x.map().get("NotificationRequestItem"), Item.class)
 						: null;
 			}
 		}
 	}
 
-	public record Item(Map<String, Object> additionalData, Amount amount, String eventCode,
-			OffsetDateTime eventDate, String merchantAccountCode, String merchantReference, String paymentMethod,
-			String pspReference, String reason, boolean success) {
+	public record Item(Map<String, Object> additionalData, Amount amount, String eventCode, OffsetDateTime eventDate,
+			String merchantAccountCode, String merchantReference, String paymentMethod, String pspReference,
+			String reason, boolean success) {
 	}
 }

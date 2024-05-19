@@ -1,0 +1,8 @@
+.checkout {
+	.payment-parent {
+		background: light-dark(rgb(247, 248, 249), rgb(28, 30, 31));
+		border: 1px solid light-dark(rgb(230, 233, 235), rgb(54, 59, 61));
+		border-radius: 1rem;
+		padding: 1.5rem;
+	}
+}

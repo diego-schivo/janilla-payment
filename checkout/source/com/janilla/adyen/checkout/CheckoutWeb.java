@@ -31,7 +31,6 @@ import java.util.Properties;
 
 import com.janilla.web.Bind;
 import com.janilla.web.Handle;
-import com.janilla.web.Render;
 
 public class CheckoutWeb {
 
@@ -49,33 +48,20 @@ public class CheckoutWeb {
 
 	@Handle(method = "GET", path = "/preview")
 	public Preview preview(@Bind("type") String type) {
-		return new Preview("Preview", List.of(
-				new Preview.Item(URI.create("/images/sunglasses.png"), "Sunglasses", BigDecimal.valueOf(5000, 2)),
-				new Preview.Item(URI.create("/images/headphones.png"), "Headphones", BigDecimal.valueOf(5000, 2))),
+		return new Preview("Preview", type, List.of(
+				new Preview.Item(URI.create("/images/sunglasses.webp"), "Sunglasses", BigDecimal.valueOf(5000, 2)),
+				new Preview.Item(URI.create("/images/headphones.webp"), "Headphones", BigDecimal.valueOf(5000, 2))),
 				BigDecimal.valueOf(10000, 2));
 	}
 
-	@Handle(method = "GET", path = "/checkout/(\\w+)")
-	public Foo checkout(String type) {
-		return new Foo(configuration.getProperty("adyencheckout.adyen.client-key"), type);
+	@Handle(method = "GET", path = "/checkout")
+	public Checkout checkout(@Bind("type") String type) {
+		var ck = configuration.getProperty("adyencheckout.adyen.client-key");
+		return new Checkout("Checkout", type, ck);
 	}
 
 	@Handle(method = "GET", path = "/result/(\\w+)")
-	public Bar result(String type) {
-		return new Bar(switch (type) {
-		case "success" -> "Your order has been successfully placed.";
-		case "pending" -> "Your order has been received! Payment completion pending.";
-		case "failed" -> "The payment was refused. Please try a different payment method or card.";
-		case "error" -> "Error! Please review response in console and refer to Response handling.";
-		default -> throw new IllegalArgumentException();
-		});
-	}
-
-	@Render("Checkout-checkout.html")
-	public record Foo(String clientKey, String type) {
-	}
-
-	@Render("Checkout-result.html")
-	public record Bar(String message) {
+	public Result result(String type) {
+		return new Result(type, type);
 	}
 }

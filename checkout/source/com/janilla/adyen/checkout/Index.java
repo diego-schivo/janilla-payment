@@ -29,5 +29,5 @@ import java.util.Map;
 import com.janilla.web.Render;
 
 @Render("Index.html")
-public record Index(String title, List<Map.@Render("Checkout-type.html") Entry<String, String>> types) {
+public record Index(String title, List<Map.@Render("Index-type.html") Entry<String, String>> types) {
 }
