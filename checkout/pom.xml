@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>janilla-adyen-checkout</artifactId>
+	<artifactId>janilla-payment-checkout</artifactId>
 	<parent>
 		<groupId>com.janilla</groupId>
-		<artifactId>janilla-adyen</artifactId>
+		<artifactId>janilla-payment</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<build>
@@ -14,7 +14,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.janilla.adyen.checkout.AdyenCheckoutApp</mainClass>
+					<mainClass>com.janilla.payment.checkout.PaymentCheckoutApp</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

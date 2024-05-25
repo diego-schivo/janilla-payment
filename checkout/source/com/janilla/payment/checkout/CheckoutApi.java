@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
 import java.io.IOException;
 import java.net.URI;
@@ -45,8 +45,8 @@ public class CheckoutApi {
 	public Response sessions(@Bind("type") String type, HttpRequest request) throws IOException, InterruptedException {
 		var u = URI.create("https://checkout-test.adyen.com/v71/sessions");
 		var m = new HttpRequest.Method("POST");
-		var ak = configuration.getProperty("adyencheckout.adyen.api-key");
-		var ma = configuration.getProperty("adyencheckout.adyen.merchant-account");
+		var ak = configuration.getProperty("paymentcheckout.adyen.api-key");
+		var ma = configuration.getProperty("paymentcheckout.adyen.merchant-account");
 		var a = new Amount(1000, "EUR");
 		var r = UUID.randomUUID().toString();
 		var ru = request.getURI().getScheme() + "://" + request.getURI().getHost() + "/redirect?orderRef=" + r;

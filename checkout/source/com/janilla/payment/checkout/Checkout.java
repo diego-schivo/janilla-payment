@@ -21,26 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import com.janilla.frontend.RenderEngine;
-import com.janilla.frontend.Renderer;
 import com.janilla.web.Render;
 
-@Render("Layout.html")
-public record Layout(RenderEngine.Entry entry) implements Renderer {
-
-	public static Layout of(RenderEngine.Entry entry) {
-		return new Layout(entry);
-	}
-
-	@Override
-	public boolean evaluate(RenderEngine engine) {
-		record A(Layout layout, Object content) {
-		}
-		return engine.match(A.class, (i, o) -> {
-			o.setValue(entry.getValue());
-			o.setType(entry.getType());
-		});
-	}
+@Render("Checkout.html")
+public record Checkout(String title, String type, String clientKey) {
 }

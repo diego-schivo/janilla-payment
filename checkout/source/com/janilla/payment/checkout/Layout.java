@@ -21,13 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module com.janilla.payment.checkout {
+package com.janilla.payment.checkout;
 
-	exports com.janilla.payment.checkout;
+import com.janilla.frontend.RenderEngine;
+import com.janilla.frontend.RenderParticipant;
+import com.janilla.web.Render;
 
-	opens com.janilla.payment.checkout;
+@Render("Layout.html")
+public record Layout(RenderEngine.Entry entry) implements RenderParticipant {
 
-	requires transitive com.janilla;
+	public static Layout of(RenderEngine.Entry entry) {
+		return new Layout(entry);
+	}
 
-//	requires java.net.http;
+	@Override
+	public boolean render(RenderEngine engine) {
+		record A(Layout layout, Object content) {
+		}
+		return engine.match(A.class, (i, o) -> {
+			o.setValue(entry.getValue());
+			o.setType(entry.getType());
+		});
+	}
 }

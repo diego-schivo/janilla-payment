@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -30,19 +30,17 @@ import java.nio.file.Path;
 import java.util.Properties;
 import java.util.function.Supplier;
 
-import com.janilla.http.HttpExchange;
 import com.janilla.http.HttpServer;
-import com.janilla.io.IO;
 import com.janilla.reflect.Factory;
-import com.janilla.reflect.Reflection;
 import com.janilla.util.Lazy;
 import com.janilla.util.Util;
 import com.janilla.web.ApplicationHandlerBuilder;
+import com.janilla.web.WebHandler;
 
-public class AdyenCheckoutApp {
+public class PaymentCheckoutApp {
 
 	public static void main(String[] args) {
-		var a = new AdyenCheckoutApp();
+		var a = new PaymentCheckoutApp();
 		{
 			var c = new Properties();
 			try (var s = a.getClass().getResourceAsStream("configuration.properties")) {
@@ -55,8 +53,8 @@ public class AdyenCheckoutApp {
 			a.configuration = c;
 		}
 
-		var s = a.getFactory().newInstance(HttpServer.class);
-		s.setPort(Integer.parseInt(a.configuration.getProperty("adyencheckout.server.port")));
+		var s = a.getFactory().create(HttpServer.class);
+		s.setPort(Integer.parseInt(a.configuration.getProperty("paymentcheckout.server.port")));
 		s.setHandler(a.getHandler());
 		s.run();
 	}
@@ -66,24 +64,24 @@ public class AdyenCheckoutApp {
 	private Supplier<Factory> factory = Lazy.of(() -> {
 		var f = new Factory();
 		f.setTypes(Util.getPackageClasses(getClass().getPackageName()).toList());
-		f.setEnclosing(this);
+		f.setSource(this);
 		return f;
 	});
 
-	private Supplier<IO.Consumer<HttpExchange>> handler = Lazy.of(() -> {
-		var f = getFactory();
-		var b = f.newInstance(ApplicationHandlerBuilder.class);
-		var p = Reflection.property(b.getClass(), "application");
-		if (p != null)
-			p.set(b, f.getEnclosing());
+	private Supplier<WebHandler> handler = Lazy.of(() -> {
+		var b = getFactory().create(ApplicationHandlerBuilder.class);
 		return b.build();
 	});
+
+	public PaymentCheckoutApp getApplication() {
+		return this;
+	}
 
 	public Factory getFactory() {
 		return factory.get();
 	}
 
-	public IO.Consumer<HttpExchange> getHandler() {
+	public WebHandler getHandler() {
 		return handler.get();
 	}
 }

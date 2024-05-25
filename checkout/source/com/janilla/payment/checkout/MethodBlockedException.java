@@ -21,13 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-module com.janilla.payment.checkout {
+package com.janilla.payment.checkout;
 
-	exports com.janilla.payment.checkout;
+import com.janilla.web.Error;
+import com.janilla.web.Render;
 
-	opens com.janilla.payment.checkout;
+@Error(code = 403, text = "Forbidden")
+@Render("""
+		{message}
+		""")
+public class MethodBlockedException extends RuntimeException {
 
-	requires transitive com.janilla;
+	private static final long serialVersionUID = -8916523033032353100L;
 
-//	requires java.net.http;
+	public MethodBlockedException() {
+		super("The requested action is disabled on this public server: please set up and run the application locally");
+	}
 }

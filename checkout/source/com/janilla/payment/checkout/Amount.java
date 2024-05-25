@@ -21,11 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import com.janilla.http.HttpExchange;
-
-public class CustomExchange extends HttpExchange {
-
-	public Layout layout;
+public record Amount(int value, String currency) {
 }

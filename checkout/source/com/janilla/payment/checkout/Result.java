@@ -21,16 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import com.janilla.http.HttpExchange;
-import com.janilla.http.HttpRequest;
-import com.janilla.http.HttpServer;
+import com.janilla.web.Render;
 
-public class CustomServer extends HttpServer {
+@Render("Result.html")
+public record Result(String title, String type) {
 
-	@Override
-	protected HttpExchange createExchange(HttpRequest request) {
-		return new CustomExchange();
+	public @Render("Result-thankYou.html") String thankYou() {
+		return switch (type) {
+		case "success", "pending" -> "thank-you";
+		default -> null;
+		};
+	}
+
+	public String message() {
+		return switch (type) {
+		case "success" -> "Your order has been successfully placed.";
+		case "pending" -> "Your order has been received! Payment completion pending.";
+		case "failed" -> "The payment was refused. Please try a different payment method or card.";
+		case "error" -> "Error! Please review response in console and refer to Response handling.";
+		default -> null;
+		};
 	}
 }

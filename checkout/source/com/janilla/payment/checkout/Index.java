@@ -21,24 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
-import com.janilla.frontend.RenderEngine;
-import com.janilla.http.HttpExchange;
-import com.janilla.web.TemplateHandlerFactory;
+import com.janilla.web.Render;
 
-public class CustomTemplateHandlerFactory extends TemplateHandlerFactory {
-
-	@Override
-	protected void render(RenderEngine.Entry input, HttpExchange exchange) throws IOException {
-		var e = (CustomExchange) exchange;
-		var a = exchange.getRequest().getHeaders().get("Accept");
-		if (e.layout == null && !a.equals("*/*")) {
-			e.layout = Layout.of(input);
-			input = RenderEngine.Entry.of(null, e.layout, null);
-		}
-		super.render(input, exchange);
-	}
+@Render("Index.html")
+public record Index(String title, List<Map.@Render("Index-type.html") Entry<String, String>> types) {
 }

@@ -21,10 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import com.janilla.web.Render;
+import com.janilla.http.HttpExchange;
+import com.janilla.http.HttpRequest;
+import com.janilla.http.HttpResponse;
+import com.janilla.http.HttpServer;
+import com.janilla.reflect.Factory;
 
-@Render("Checkout.html")
-public record Checkout(String title, String type, String clientKey) {
+public class CustomServer extends HttpServer {
+
+	public Factory factory;
+
+	@Override
+	protected HttpExchange buildExchange(HttpRequest request, HttpResponse response) {
+		var e = factory.create(HttpExchange.class);
+		e.setRequest(request);
+		e.setResponse(response);
+		return e;
+	}
 }

@@ -21,7 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-public record Amount(int value, String currency) {
+import java.util.Properties;
+
+import com.janilla.http.HttpExchange;
+import com.janilla.web.HandleException;
+import com.janilla.web.MethodHandlerFactory;
+import com.janilla.web.MethodInvocation;
+
+public class CustomMethodHandlerFactory extends MethodHandlerFactory {
+
+	public Properties configuration;
+
+	@Override
+	protected void handle(MethodInvocation invocation, HttpExchange exchange) {
+		if (Boolean.parseBoolean(configuration.getProperty("paymentcheckout.live-demo"))) {
+			var q = exchange.getRequest();
+			switch (q.getMethod().name()) {
+			case "GET":
+				if (q.getURI().getPath().equals("/checkout"))
+					throw new HandleException(new MethodBlockedException());
+				break;
+			default:
+				throw new HandleException(new MethodBlockedException());
+			}
+		}
+		super.handle(invocation, exchange);
+	}
 }

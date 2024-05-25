@@ -21,27 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import com.janilla.web.Render;
+import com.janilla.frontend.RenderEngine;
+import com.janilla.http.HttpExchange;
+import com.janilla.web.TemplateHandlerFactory;
 
-@Render("Result.html")
-public record Result(String title, String type) {
+public class CustomTemplateHandlerFactory extends TemplateHandlerFactory {
 
-	public @Render("Result-thankYou.html") String thankYou() {
-		return switch (type) {
-		case "success", "pending" -> "thank-you";
-		default -> null;
-		};
-	}
-
-	public String message() {
-		return switch (type) {
-		case "success" -> "Your order has been successfully placed.";
-		case "pending" -> "Your order has been received! Payment completion pending.";
-		case "failed" -> "The payment was refused. Please try a different payment method or card.";
-		case "error" -> "Error! Please review response in console and refer to Response handling.";
-		default -> null;
-		};
+	@Override
+	protected void render(RenderEngine.Entry input, HttpExchange exchange) {
+		var e = (CustomExchange) exchange;
+		var a = exchange.getRequest().getHeaders().get("Accept");
+		if (e.layout == null && !a.equals("*/*")) {
+			e.layout = Layout.of(input);
+			input = RenderEngine.Entry.of(null, e.layout, null);
+		}
+		super.render(input, exchange);
 	}
 }

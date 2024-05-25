@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -56,7 +56,7 @@ public class CheckoutWeb {
 
 	@Handle(method = "GET", path = "/checkout")
 	public Checkout checkout(@Bind("type") String type) {
-		var ck = configuration.getProperty("adyencheckout.adyen.client-key");
+		var ck = configuration.getProperty("paymentcheckout.adyen.client-key");
 		return new Checkout("Checkout", type, ck);
 	}
 

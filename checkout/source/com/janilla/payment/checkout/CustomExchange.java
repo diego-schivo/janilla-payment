@@ -21,13 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.janilla.adyen.checkout;
+package com.janilla.payment.checkout;
 
-import java.util.List;
-import java.util.Map;
+import com.janilla.http.HttpExchange;
 
-import com.janilla.web.Render;
+public class CustomExchange extends HttpExchange {
 
-@Render("Index.html")
-public record Index(String title, List<Map.@Render("Index-type.html") Entry<String, String>> types) {
+	public Layout layout;
 }

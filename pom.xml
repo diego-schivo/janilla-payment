@@ -3,21 +3,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.janilla</groupId>
-	<artifactId>janilla-adyen</artifactId>
+	<artifactId>janilla-payment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>com.janilla</groupId>
 			<artifactId>janilla</artifactId>
-			<version>0.13.0</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.janilla</groupId>
-				<artifactId>janilla-adyen-checkout</artifactId>
+				<artifactId>janilla-payment-checkout</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
@@ -45,7 +45,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.janilla.adyen.checkout.AdyenCheckoutApp</mainClass>
+					<mainClass>com.janilla.payment.checkout.PaymentCheckoutApp</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -54,7 +54,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<version>3.2.0</version>
+					<version>3.3.0</version>
 					<executions>
 						<execution>
 							<goals>
@@ -66,9 +66,9 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<name>Janilla Adyen</name>
-	<description>Sample Janilla reference application.</description>
-	<url>https://github.com/diego-schivo/janilla-adyen</url>
+	<name>Janilla Payment</name>
+	<description>Adyen Payment Examples (partial) porting to Janilla</description>
+	<url>https://github.com/diego-schivo/janilla-payment</url>
 	<licenses>
 		<license>
 			<name>MIT</name>
@@ -84,10 +84,10 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git://github.com/diego-schivo/janilla-adyen.git</connection>
+		<connection>scm:git:git://github.com/diego-schivo/janilla-payment.git</connection>
 		<developerConnection>
-			scm:git:ssh://git@github.com/diego-schivo/janilla-adyen.git</developerConnection>
-		<url>https://github.com/diego-schivo/janilla-adyen</url>
+			scm:git:ssh://git@github.com/diego-schivo/janilla-payment.git</developerConnection>
+		<url>https://github.com/diego-schivo/janilla-payment</url>
 		<tag>HEAD</tag>
 	</scm>
 </project>
