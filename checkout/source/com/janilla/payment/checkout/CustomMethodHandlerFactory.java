@@ -39,7 +39,7 @@ public class CustomMethodHandlerFactory extends MethodHandlerFactory {
 			var q = exchange.getRequest();
 			switch (q.getMethod().name()) {
 			case "GET":
-				if (q.getURI().getPath().equals("/checkout"))
+				if (q.getUri().getPath().equals("/checkout"))
 					throw new HandleException(new MethodBlockedException());
 				break;
 			default:

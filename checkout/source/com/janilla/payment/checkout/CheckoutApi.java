@@ -49,7 +49,7 @@ public class CheckoutApi {
 		var ma = configuration.getProperty("paymentcheckout.adyen.merchant-account");
 		var a = new Amount(1000, "EUR");
 		var r = UUID.randomUUID().toString();
-		var ru = request.getURI().getScheme() + "://" + request.getURI().getHost() + "/redirect?orderRef=" + r;
+		var ru = request.getUri().getScheme() + "://" + request.getUri().getHost() + "/redirect?orderRef=" + r;
 		var cc = "NL";
 		var ad = Map.<String, Object>of("riskdata.skipRisk", true);
 		var s = Http.fetch(u, m,
