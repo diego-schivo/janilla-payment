@@ -41,7 +41,8 @@ public class WebhookApi {
 	public void webhooks(@Bind(resolver = Request.Resolver.class) Request request, HttpResponse response)
 			throws IOException {
 		System.out.println(request);
-		response.setStatus(new HttpResponse.Status(202, "Accepted"));
+//		response.setStatus(new HttpResponse.Status(202, "Accepted"));
+		response.setStatus(202);
 	}
 
 	public record Request(boolean live, List<Item> notificationItems) {
