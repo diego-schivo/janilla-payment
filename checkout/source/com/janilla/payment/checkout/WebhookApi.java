@@ -31,7 +31,7 @@ import java.util.function.UnaryOperator;
 
 import com.janilla.http.HttpResponse;
 import com.janilla.json.Converter;
-import com.janilla.json.Converter.MapType;
+import com.janilla.json.Converter;
 import com.janilla.web.Bind;
 import com.janilla.web.Handle;
 
@@ -50,7 +50,7 @@ public class WebhookApi {
 		public static class Resolver implements UnaryOperator<Converter.MapType> {
 
 			@Override
-			public MapType apply(MapType x) {
+			public Converter.MapType apply(Converter.MapType x) {
 				return x.type() == Item.class
 						? new Converter.MapType((Map<?, ?>) x.map().get("NotificationRequestItem"), Item.class)
 						: null;

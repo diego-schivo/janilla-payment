@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.Properties;
 import java.util.function.Supplier;
 
+import com.janilla.http.HttpHandler;
 import com.janilla.net.Server;
 import com.janilla.reflect.Factory;
 import com.janilla.util.Lazy;
@@ -56,7 +57,7 @@ public class PaymentCheckoutApp {
 		var s = a.getFactory().create(Server.class);
 		s.setAddress(
 				new InetSocketAddress(Integer.parseInt(a.configuration.getProperty("paymentcheckout.server.port"))));
-		s.setHandler(a.getHandler());
+		// s.setHandler(a.getHandler());
 		s.serve();
 	}
 
@@ -69,7 +70,7 @@ public class PaymentCheckoutApp {
 		return f;
 	});
 
-	private Supplier<Server.Handler> handler = Lazy.of(() -> {
+	private Supplier<HttpHandler> handler = Lazy.of(() -> {
 		var b = getFactory().create(ApplicationHandlerBuilder.class);
 		return b.build();
 	});
@@ -82,7 +83,7 @@ public class PaymentCheckoutApp {
 		return factory.get();
 	}
 
-	public Server.Handler getHandler() {
+	public HttpHandler getHandler() {
 		return handler.get();
 	}
 }

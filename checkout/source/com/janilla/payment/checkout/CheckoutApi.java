@@ -53,7 +53,7 @@ public class CheckoutApi {
 		var cc = "NL";
 		var ad = Map.<String, Object>of("riskdata.skipRisk", true);
 //		var s = Http.fetch(u, m,
-//				Map.of("Content-Type", "application/json", "Accept", "application/json", "X-API-Key", ak),
+//				Map.of("content-type", "application/json", "accept", "application/json", "X-API-Key", ak),
 //				Json.format(new Request(ma, a, ru, r, cc, ad), true));
 		String s = null;
 		return (Response) new Converter().convert(Json.parse(s), Response.class);
