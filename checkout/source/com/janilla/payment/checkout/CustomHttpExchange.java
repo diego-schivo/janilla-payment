@@ -23,17 +23,9 @@
  */
 package com.janilla.payment.checkout;
 
-import com.janilla.http.HttpRequest;
-import com.janilla.http.HttpProtocol;
 import com.janilla.http.HttpExchange;
-import com.janilla.reflect.Factory;
 
-public class CustomHttp2Protocol extends HttpProtocol {
+public class CustomHttpExchange extends HttpExchange {
 
-	public Factory factory;
-
-	@Override
-	protected HttpExchange createExchange(HttpRequest request) {
-		return factory.create(HttpExchange.class);
-	}
+	public Layout layout;
 }
